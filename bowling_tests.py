@@ -46,15 +46,17 @@ class TestPlayer(unittest.TestCase):
             self.assertEqual(len(p.frames), 10)
 
     def testCalculateFramesScore(self):
-        # test table  [(rolls, frames, frame_scores), ...]
-        # It looks ugly :(  but since I'm using randint in the game, I did not find
-        # better way to emulate the game process in the test.
-        # so I will assign Player.rolls, Player.frames and check the Player.scores
+        # test table structure: [(rolls, frames, frame_scores), ...]
+        # It looks huge and ugly :(  but since the player.roll() and
+        # player.play_frames() methods give random results each time,
+        # I did not find a better way to emulate the game process in the test.
+        # so I will assign Player.rolls and Player.frames, call the testing
+        # function and check the Player.scores
 
         # if there is not enough rolls to define all the bonuses,
         # then the frame score is yet undefined
-        test_table = [
-            ([0, 0], [[0]], [0]),
+        games_list = [
+            ([0, 0], [[0, 0]], [0]),
             ([5, 4], [[5, 4]], [9]),
 
             ([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -92,8 +94,8 @@ class TestPlayer(unittest.TestCase):
              [[0, 0], [5, 5], [0, 0], [4, 6], [8, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 10, 5]],
              [0, 10, 0, 18, 8, 0, 0, 0, 0, 15]),
             # mixed
-            ([10, 5, 5, 3, 0], [[10], [5, 5], [3, 0]], [20, 13]),
-            ([0, 10, 10, 0, 0], [[0, 10], [10], [0, 0]], [20, 10]),
+            ([10, 5, 5, 3, 0], [[10], [5, 5], [3, 0]], [20, 13, 3]),
+            ([0, 10, 10, 0, 0], [[0, 10], [10], [0, 0]], [20, 10, 0]),
 
             ([0, 0, 2, 8, 10, 3, 3],
              [[0, 0], [2, 8], [10], [3, 3]],
@@ -102,14 +104,16 @@ class TestPlayer(unittest.TestCase):
             ([0, 0, 5, 5, 0, 0, 4, 6, 8, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 10, 5],
              [[0, 0], [5, 5], [0, 0], [4, 6], [8, 0], [0, 0], [0, 0], [0, 0], [0, 10], [0, 10, 5]],
              [0, 10, 0, 18, 8, 0, 0, 0, 10, 15]),
+
             ([0, 0, 5, 5, 0, 0, 4, 6, 8, 0, 0, 0, 0, 0, 0, 0, 10, 0, 10, 5, 0],
              [[0, 0], [5, 5], [0, 0], [4, 6], [8, 0], [0, 0], [0, 0], [0, 0], [10, 0], [10, 5, 0]],
-             [0, 10, 0, 18, 8, 0, 0, 0, 20, 15]),
+             [0, 10, 0, 18, 8, 0, 0, 0, 20, 15])
         ]
+
         p = Player()
-        for rolls, frames, scores in test_table:
-            p.rolls = rolls,
-            p.frames = frames,
+        for rolls, frames, scores in games_list:
+            p.rolls = rolls
+            p.frames = frames
             p.calculate_frames_score()
             self.assertEqual(scores, p.scores)
 

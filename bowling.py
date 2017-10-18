@@ -51,11 +51,28 @@ class Player:
         """
         Define each frame score. Save results in self.scores
         """
-        # debug
-        print(self.rolls)
-        print(self.frames)
-
+        self.scores = []
+        ri = 0  # roll index
         for frame in self.frames:
+            if sum(frame) < 10:  # usual frame
+                self.scores.append(sum(frame))
+                ri += 2  # there are two rolls in a usual frame
+            try:
+                if frame == [10]:  # strike
+                    self.scores.append(
+                        # frame result + strike bonus
+                        self.rolls[ri] + self.rolls[ri+1] + self.rolls[ri+2]
+                    )
+                    ri += 1  # one roll in frame, when there was a strike
+                # spares and final frame
+                elif sum(frame) >= 10:
+                    if len(frame) == 2:  # spare frame
+                        self.scores.append(sum(frame) + self.rolls[ri+2])
+                    else:  # final frame
+                        self.scores.append(sum(frame))
+                    ri += 2
+            except IndexError:  # seems that rolls are over
+                break  # so we couldn't calculate the bonus
 
 
 class Game:
