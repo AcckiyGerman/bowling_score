@@ -1,5 +1,5 @@
 import unittest
-from bowling import Game, Player
+from bowling import Player
 
 
 class TestPlayer(unittest.TestCase):
@@ -136,10 +136,6 @@ class TestPlayer(unittest.TestCase):
     def testFormatScores(self, ):
         self.assertEqual(Player.format_score(0),   '|   0 |')
         self.assertEqual(Player.format_score(10),  '|  10 |')
-
-
-class TestGame(unittest.TestCase):
-    pass
 
 
 if __name__ == "__main__":

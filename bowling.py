@@ -74,17 +74,19 @@ class Player:
             except IndexError:  # seems that rolls are over
                 break  # so we couldn't calculate the bonus
 
-    def __str__(self):
+    def call_the_score(self):
         """
         Prints player name, fancy looking frames and scores table,
         and the Total score.
         """
+        self.calculate_frames_score()
         print('Player: ', self.name)
         for frame in self.frames:
             print(self.format_frame(frame), end="")
+        print('')
         for score in self.scores:
             print(self.format_score(score), end="")
-        print('Total score:', sum(self.scores))
+        print('\nTotal score:', sum(self.scores), '\n')
 
     @staticmethod
     def format_frame(frame):
@@ -115,6 +117,11 @@ class Player:
         return '|  %2d |' % score
 
 
-class Game:
-    def __init__(self, *names):
-        self.players = [Player(name) for name in names]
+if __name__ == "__main__":
+    names = ['Dmytro Gierman', 'Collaboss team']
+    players = [Player(name) for name in names]
+    for frame in range(10):
+        print('     ---- Round %d ----    ' % (frame + 1))
+        for player in players:
+            player.play_frame()
+            player.call_the_score()
