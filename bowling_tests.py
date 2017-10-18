@@ -16,7 +16,7 @@ class TestPlayer(unittest.TestCase):
             self.assertTrue(
                 0 <= p.roll(10) <= 10
             )
-            self.assertEqual(len(p.rolls), i)
+            self.assertEqual(len(p.rolls), i+1)
 
 
 class TestGame(unittest.TestCase):
