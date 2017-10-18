@@ -27,7 +27,25 @@ class Player:
         spare or strike bonus (see bowling rules)
         """
         frame = []
-
+        roll1 = self.roll(10)
+        frame.append(roll1)
+        if roll1 == 10:  # strike
+            # check for tenth frame
+            if len(self.frames) == 9:
+                roll2 = self.roll(10)
+                frame.append(roll2)
+                roll3 = self.roll(10-roll2 or 10)
+                frame.append(roll3)
+        else:
+            roll2 = self.roll(10-roll1)
+            frame.append(roll2)
+            # check for spare in tenth frame
+            if len(self.frames) == 9 and sum(frame) == 10:
+                frame.append(self.roll(10))  # roll3
+        # save the frame
+        self.frames.append(frame)
+        # debug
+        # print(frame, end="")
 
 
 class Game:
