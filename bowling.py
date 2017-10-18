@@ -47,6 +47,14 @@ class Player:
         # debug
         # print(frame, end="")
 
+    def calculate_frames_score(self):
+        """
+        Define each frame score. Save results in self.scores
+        """
+        # debug
+        print(self.rolls)
+        print(self.frames)
+
 
 class Game:
     def __init__(self, *names):
