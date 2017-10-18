@@ -74,6 +74,46 @@ class Player:
             except IndexError:  # seems that rolls are over
                 break  # so we couldn't calculate the bonus
 
+    def __str__(self):
+        """
+        Prints player name, fancy looking frames and scores table,
+        and the Total score.
+        """
+        print('Player: ', self.name)
+        for frame in self.frames:
+            print(self.format_frame(frame), end="")
+        for score in self.scores:
+            print(self.format_score(score), end="")
+        print('Total score:', sum(self.scores))
+
+    @staticmethod
+    def format_frame(frame):
+        """:return: fancy string representing frame"""
+        # last frame
+        if len(frame) == 3:
+            roll1 = 'X' if frame[0] == 10 else frame[0] or '-'
+            if frame[0] + frame[1] == 10 and frame[1]:
+                roll2 = '/'
+            elif frame[1] == 10:
+                roll2 = 'X'
+            else:
+                roll2 = frame[1] or '-'
+            roll3 = 'X' if frame[2] == 10 else frame[2] or '-'
+            return '|%s %s %s|' % (roll1, roll2, roll3)
+        # usual or spare frame
+        elif len(frame) == 2:
+            roll1 = frame[0] or '-'
+            roll2 = '/' if sum(frame) == 10 else frame[1] or '-'
+            return '| %s %s |' % (roll1, roll2)
+        # strike
+        elif len(frame) == 1:
+            return "|   X |"
+
+    @staticmethod
+    def format_score(score):
+        """:return: fancy string representing score for one frame"""
+        return '|  %2d |' % score
+
 
 class Game:
     def __init__(self, *names):

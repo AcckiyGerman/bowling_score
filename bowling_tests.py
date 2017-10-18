@@ -117,6 +117,26 @@ class TestPlayer(unittest.TestCase):
             p.calculate_frames_score()
             self.assertEqual(scores, p.scores)
 
+    def testFormatFrame(self):
+        self.assertEqual(Player.format_frame([10]),    '|   X |')
+        self.assertEqual(Player.format_frame([5, 0]),  '| 5 - |')
+        self.assertEqual(Player.format_frame([0, 0]),  '| - - |')
+        self.assertEqual(Player.format_frame([5, 5]),  '| 5 / |')
+        self.assertEqual(Player.format_frame([5, 4]),  '| 5 4 |')
+        self.assertEqual(Player.format_frame([0, 10]), '| - / |')
+        # last frame
+        self.assertEqual(Player.format_frame([5, 5, 5]),    '|5 / 5|')
+        self.assertEqual(Player.format_frame([5, 5, 0]),    '|5 / -|')
+        self.assertEqual(Player.format_frame([0, 10, 0]),   '|- / -|')
+        self.assertEqual(Player.format_frame([10, 0, 5]),   '|X - 5|')
+        self.assertEqual(Player.format_frame([10, 10, 5]),  '|X X 5|')
+        self.assertEqual(Player.format_frame([10, 0, 10]),  '|X - X|')
+        self.assertEqual(Player.format_frame([10, 10, 10]), '|X X X|')
+
+    def testFormatScores(self, ):
+        self.assertEqual(Player.format_score(0),   '|   0 |')
+        self.assertEqual(Player.format_score(10),  '|  10 |')
+
 
 class TestGame(unittest.TestCase):
     pass
