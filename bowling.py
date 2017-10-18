@@ -55,6 +55,8 @@ class Player:
         print(self.rolls)
         print(self.frames)
 
+        for frame in self.frames:
+
 
 class Game:
     def __init__(self, *names):
