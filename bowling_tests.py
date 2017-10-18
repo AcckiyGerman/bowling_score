@@ -9,6 +9,15 @@ class TestPlayer(unittest.TestCase):
             {'name': 'John', 'rolls': [], 'scores': [], 'frames': []}
         )
 
+    def testRoll(self):
+        """Player.roll() uses randint, thus we testing it many times"""
+        p = Player()
+        for i in range(200):
+            self.assertTrue(
+                0 <= p.roll(10) <= 10
+            )
+            self.assertEqual(len(p.rolls), i)
+
 
 class TestGame(unittest.TestCase):
     pass
