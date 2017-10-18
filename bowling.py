@@ -80,13 +80,10 @@ class Player:
         and the Total score.
         """
         self.calculate_frames_score()
-        print('Player: ', self.name)
-        for frame in self.frames:
-            print(self.format_frame(frame), end="")
-        print('')
-        for score in self.scores:
-            print(self.format_score(score), end="")
-        print('\nTotal score:', sum(self.scores), '\n')
+        print('Player: ' + self.name)
+        print(''.join([self.format_frame(frame) for frame in self.frames]))
+        print(''.join([self.format_score(score) for score in self.scores]))
+        print('Total score: %d \n' % sum(self.scores))
 
     @staticmethod
     def format_frame(frame):
@@ -120,8 +117,8 @@ class Player:
 if __name__ == "__main__":
     names = ['Dmytro Gierman', 'Collaboss team']
     players = [Player(name) for name in names]
-    for frame in range(10):
-        print('     ---- Round %d ----    ' % (frame + 1))
+    for gameround in range(10):
+        print('     ---- Round %d ----    ' % (gameround + 1))
         for player in players:
             player.play_frame()
             player.call_the_score()
