@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from random import randint
 
 
@@ -115,7 +116,12 @@ class Player:
 
 
 if __name__ == "__main__":
-    names = ['Dmytro Gierman', 'Collaboss team']
+    import sys
+    if len(sys.argv) > 1:
+        names = [name for name in sys.argv[1:]]
+    else:
+        names = ['Dmytro Gierman', 'Collaboss team']
+
     players = [Player(name) for name in names]
     for gameround in range(10):
         print('     ---- Round %d ----    ' % (gameround + 1))
